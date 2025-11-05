@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AIMAN VIP - Premium Prediction</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      background: white;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    .main-box {
+      max-width: 450px;
+      margin: auto;
+      background: #f9f9f9;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+    h1 {
+      text-align: center;
+      color: #222;
+    }
+    .section {
+      margin-top: 20px;
+      padding: 20px;
+      background: #fafafa;
+      border-radius: 12px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .timer {
+      font-size: 26px;
+      color: #e74c3c;
+      font-weight: bold;
+    }
+    .prediction {
+      font-size: 24px;
+      color: #2980b9;
+      font-weight: bold;
+    }
+    .result {
+      margin-top: 10px;
+      color: #2ecc71;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .history-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 12px;
+      margin-top: 15px;
+    }
+    .history-box {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 10px;
+      font-size: 14px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    }
+    .history-box .time {
+      font-size: 12px;
+      color: #777;
+    }
+    .history-box .num {
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 4px;
+    }
+    .history-box .pred {
+      font-size: 14px;
+      color: #2980b9;
+      font-weight: bold;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- MAIN PAGE ONLY -->
+  <div class="main-box" id="mainPage">
+    <h1>🧠 Premium Prediction Panel</h1>
+    <div class="section">
+      <div>⏱ Next Result In: <span id="timer" class="timer">55</span>s</div>
+      <div class="result">Last Result: <span id="lastResult">--</span></div>
+      <div class="prediction">AI Prediction: <span id="prediction">--</span></div>
+    </div>
+
+    <div class="section">
+      <h3>📜 Prediction History</h3>
+      <div id="history" class="history-grid"></div>
+    </div>
+  </div>
+
+  <script>
+    // Prediction Script (No Login)
+    function startPrediction() {
+      let time = 55;
+      const timerEl = document.getElementById('timer');
+      const historyEl = document.getElementById('history');
+
+      function generatePrediction() {
+        const number = Math.floor(Math.random() * 10);
+        const prediction = number >= 5 ? 'BIG' : 'SMALL';
+
+        document.getElementById('lastResult').textContent = number;
+        document.getElementById('prediction').textContent = prediction;
+
+        const now = new Date().toLocaleTimeString();
+
+        const box = document.createElement('div');
+        box.className = 'history-box';
+        box.innerHTML = `
+          <div class="time">${now}</div>
+          <div class="num">Result: ${number}</div>
+          <div class="pred">Prediction: ${prediction}</div>
+        `;
+
+        historyEl.prepend(box);
+      }
+
+      generatePrediction(); // First prediction immediately
+
+      setInterval(() => {
+        time--;
+        timerEl.textContent = time;
+        if (time <= 0) {
+          time = 55;
+          generatePrediction();
+        }
+      }, 1000);
+    }
+
+    startPrediction(); // Start immediately when page loads
+  </script>
+
+</body>
+</html>
